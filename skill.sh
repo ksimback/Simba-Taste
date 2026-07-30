@@ -2,6 +2,7 @@
 
 # Local skill registry
 declare -A SKILLS=(
+  [simba-taste]="skills/simba-taste/SKILL.md"
   [taste-skill]="skills/taste-skill/SKILL.md"
   [taste-skill-v1]="skills/taste-skill-v1/SKILL.md"
   [gpt-taste]="skills/gpt-tasteskill/SKILL.md"

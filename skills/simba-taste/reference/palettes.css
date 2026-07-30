@@ -1,0 +1,108 @@
+/*
+ * palettes.css — swappable design-token palettes for template.html
+ *
+ * Each block below is a COMPLETE, copy-paste-swappable :root definition.
+ * To reskin the page, replace the :root{} block in template.html with any
+ * one of these. All colors on the page resolve through these tokens, so
+ * changing only :root swaps the entire palette (including inline SVG marks,
+ * which are re-colored via CSS presentation-attribute overrides).
+ *
+ * Token contract (identical across all palettes):
+ *   surfaces : --bg --bg-deep --bg-cool --bg-rgb --card
+ *   primary  : --primary --primary-2 --primary-line --primary-rgb --primary-2-rgb
+ *   accent   : --accent --accent-soft --accent-rgb
+ *   dark band: --band-a --band-b --on-dark
+ *   text     : --ink --ink-soft --ink-mute
+ *   utility  : --hairline --shadow-rgb
+ *   (keep the existing --r-sm/--r-md/--r-lg/--ease radius & easing tokens)
+ */
+
+/* === Oxblood (default) === */
+:root {
+  --bg: #F2EDE6;
+  --bg-deep: #EAE3D9;
+  --bg-cool: #EDE7DE;
+  --bg-rgb: 242,237,230;
+  --card: #F8F5F0;
+
+  --primary: #4A1D22;
+  --primary-2: #6E2E34;
+  --primary-line: #833C42;
+  --primary-rgb: 74,29,34;
+  --primary-2-rgb: 110,46,52;
+
+  --accent: #B07A34;
+  --accent-soft: #C6924B;
+  --accent-rgb: 176,122,52;
+
+  --band-a: #632A2F;
+  --band-b: #2B1114;
+  --on-dark: #F3ECE4;
+
+  --ink: #1D1718;
+  --ink-soft: #4E4644;
+  --ink-mute: #746A66;
+
+  --hairline: rgba(var(--primary-rgb), 0.12);
+  --shadow-rgb: 43,17,20;
+}
+
+/* === Evergreen === */
+:root {
+  --bg: #F4F2ED;
+  --bg-deep: #EDEBE3;
+  --bg-cool: #E9EAE3;
+  --bg-rgb: 244,242,237;
+  --card: #FBFAF6;
+
+  --primary: #1F3D2F;
+  --primary-2: #2E5A44;
+  --primary-line: #33543F;
+  --primary-rgb: 31,61,47;
+  --primary-2-rgb: 46,90,68;
+
+  --accent: #B98A3E;
+  --accent-soft: #C79B52;
+  --accent-rgb: 185,138,62;
+
+  --band-a: #294F3C;
+  --band-b: #12241B;
+  --on-dark: #F3F1EA;
+
+  --ink: #1D1718;
+  --ink-soft: #4E4644;
+  --ink-mute: #746A66;
+
+  --hairline: rgba(var(--primary-rgb), 0.12);
+  --shadow-rgb: 20,38,29;
+}
+
+/* === Aubergine === */
+:root {
+  --bg: #F3EEF1;
+  --bg-deep: #ECE4E9;
+  --bg-cool: #EEE7EC;
+  --bg-rgb: 243,238,241;
+  --card: #FBF7FA;
+
+  --primary: #3A2340;
+  --primary-2: #5A3A62;
+  --primary-line: #6C4874;
+  --primary-rgb: 58,35,64;
+  --primary-2-rgb: 90,58,98;
+
+  --accent: #C6A24E;
+  --accent-soft: #D4B468;
+  --accent-rgb: 198,162,78;
+
+  --band-a: #513457;
+  --band-b: #221425;
+  --on-dark: #F1EAF0;
+
+  --ink: #1D1718;
+  --ink-soft: #4E4644;
+  --ink-mute: #746A66;
+
+  --hairline: rgba(var(--primary-rgb), 0.12);
+  --shadow-rgb: 40,28,44;
+}

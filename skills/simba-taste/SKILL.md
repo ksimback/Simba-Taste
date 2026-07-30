@@ -1,142 +1,139 @@
 ---
 name: simba-taste
-description: Kevin's personal frontend taste. A single locked "refined editorial-premium" style with a swappable palette library (Oxblood default, Evergreen and Aubergine alternates). Every color is a design token so palettes fully propagate. Hard anti-AI-tell rules baked in. Use for landing pages, marketing sites, and portfolios that must look intentional and human-made — not templated.
+description: Kevin's personal frontend taste as a complete design system. One locked "refined editorial-premium" style (Spectral + Work Sans, dials 7/6/4) with a swappable, fully-tokenized palette library (Oxblood default; Evergreen, Aubergine alternates), light + dark themes, responsive foundations, and a full component set. Adapts to the project's stack (HTML/CSS, Tailwind, or React/Next). Every build ships a DESIGN.md. Hard anti-AI-tell rules baked in. Use for landing pages, marketing sites, portfolios, and redesigns that must look intentional and human-made.
 ---
 
-# Simba-Taste — Refined Editorial-Premium Frontend
+# Simba-Taste — Refined Editorial-Premium Design System
 
-> One opinionated style, done well, in a small library of palettes.
-> This skill does not offer a spectrum of aesthetics — it encodes a single point of view and makes **color** the only dial you turn per project.
+> One opinionated style, done well, in a small library of palettes — now a full system: light + dark, responsive, real components, and a design doc on every build.
+> Color is the only aesthetic dial you turn per project. Everything else is fixed below.
 
-Use this for: landing pages, marketing sites, portfolios, redesigns where the brief is "make it look premium and distinctive."
-Not for: dashboards, dense data tables, or multi-step product UI.
-
----
-
-## 0. The one-line design read
-
-Before building, state: *"Building in Simba-Taste, `<palette>` palette."* Default palette is **Oxblood**. Only switch palette if the user names one or the brand demands it. Do not re-derive the aesthetic — it is fixed below.
+Use for: landing pages, marketing sites, portfolios, redesigns where the goal is "premium and distinctive."
+Not for: dashboards, dense data tables, multi-step product UI.
 
 ---
 
-## 1. The locked style (do not renegotiate)
+## 0. Start every build here
 
-**Feel:** expensive, warm, editorial, calm-confident. Premium through restraint and typography, not decoration.
-
-**Dials (fixed baseline):** `DESIGN_VARIANCE 7 / MOTION 6 / VISUAL_DENSITY 4`.
-
-**Type:**
-- Display: **Spectral** (a refined editorial serif). Weights 300–600. Used for the hero headline, section headlines, feature titles, and the closing band.
-- Body / UI: **Work Sans**. Weights 400–600.
-- Never Fraunces (too defaulted), never Inter-as-identity.
-- Section eyebrows: Work Sans, uppercase, ~13px, letter-spacing ~0.14em, in `--primary` or `--accent`.
-
-**Layout system:**
-- **Header:** wordmark + logo mark (left), nav links + one solid CTA (right), hairline bottom border.
-- **Hero:** two columns. Left = eyebrow, large Spectral headline (one clean statement), body sub, primary + ghost CTA, a small reassurance line. Right = a **floating product panel** built in pure CSS/SVG (rounded, soft-shadowed, palette-tinted) with a couple of floating status chips.
-- **Proof strip:** "Trusted by teams at" + 5 text logos, each with a small inline-SVG glyph. Hairline top and bottom.
-- **Features:** 3 cards, medium radius, soft shadow, each with a small icon tile, an index numeral (`01 / 03`), a Spectral title, and one body line.
-- **Closing CTA band:** full-width **dark** band (`--band-a` → `--band-b` gradient) with a Spectral headline (accent-colored key word), a light button, and a faint grid/glow texture.
-- **Footer:** wordmark, © line, a few small links. Hairline top.
-
-**Radius / depth / motion:**
-- Radius: `--r-sm 10px / --r-md 16px / --r-lg 22px`. Rounded, but not pill-shaped.
-- Shadows: soft and restrained (`--shadow-sm/md/lg`), never glowy.
-- Motion (~6/10): gentle hover lifts/scales and soft fade-up reveals via CSS transitions. **No scroll libraries.** If you use a fade-up reveal, its resting state MUST be visible (`animation-fill-mode: forwards`, keyframes ending at `opacity:1`) — never leave content stuck at `opacity:0`.
-
-The canonical implementation is [`reference/template.html`](reference/template.html). Match its structure; do not reinvent it.
+1. **Resolve the stack** (§1).
+2. **State the design read:** *"Building in Simba-Taste, `<palette>` palette, `<stack>`, light+dark."* Default palette is **Oxblood**.
+3. Build from the reference (`reference/template.html` + `reference/components.html`), applying the locked style (§2), token system (§3), responsive + dark rules (§4), and the anti-AI-tell rulebook (§6).
+4. **Emit a `DESIGN.md`** for the project (§7).
 
 ---
 
-## 2. Color is the only variable — and it is fully tokenized
+## 1. Stack resolution (adaptive)
 
-**Hard rule: every color in the output is a CSS custom property. Zero hardcoded color literals anywhere except the `:root` block.** This is non-negotiable — it is the whole reason palettes work. A page that hardcodes even one color (a gradient stop, a border tint, an SVG stroke) will only half-swap and is considered broken.
+The skill outputs in the project's real stack — do not default to generic HTML blindly.
 
-### The token contract (21 tokens)
-
-```css
-:root {
-  /* surfaces */
-  --bg; --bg-deep; --bg-cool; --bg-rgb; --card;
-  /* brand */
-  --primary; --primary-2; --primary-line; --primary-rgb; --primary-2-rgb;
-  --accent; --accent-soft; --accent-rgb;
-  /* dark closing band + text on dark */
-  --band-a; --band-b; --on-dark;
-  /* ink (text) — shared across palettes */
-  --ink; --ink-soft; --ink-mute;
-  /* derived */
-  --hairline: rgba(var(--primary-rgb), 0.12);
-  --shadow-rgb;
-}
-```
-
-Rules that make full propagation work:
-- All tints use the `-rgb` triplet tokens: `rgba(var(--primary-rgb), 0.12)`, `rgba(var(--accent-rgb), 0.2)`, `rgba(var(--shadow-rgb), 0.1)`. Never write a raw `rgba(r,g,b,a)` with numbers.
-- **Inline SVG colors** (logo mark, proof-strip glyphs, icons) cannot read `var()` from presentation attributes. Drive them with CSS instead — either `stroke="currentColor"` (inherits token-driven `color`) or targeted rules that override the attribute, e.g. `.logo .glyph svg [stroke]{ stroke: var(--primary) }`. CSS beats presentation attributes, so `:root` swaps reskin the marks too.
-- The dark closing band uses `--band-a`/`--band-b`, never a hardcoded green/dark.
-
-### The palette library
-
-Swap palettes by replacing the color tokens in `:root` (see [`reference/palettes.css`](reference/palettes.css) for the three complete blocks). Names the user can say: **"Oxblood"**, **"Evergreen"**, **"Aubergine"**.
-
-**Oxblood — default.** Deep burgundy, warm stone, bronze.
-```css
---bg:#F2EDE6; --bg-deep:#EAE3D9; --bg-cool:#EDE7DE; --bg-rgb:242,237,230; --card:#F8F5F0;
---primary:#4A1D22; --primary-2:#6E2E34; --primary-line:#833C42; --primary-rgb:74,29,34; --primary-2-rgb:110,46,52;
---accent:#B07A34; --accent-soft:#C6924B; --accent-rgb:176,122,52;
---band-a:#632A2F; --band-b:#2B1114; --on-dark:#F3ECE4;
---ink:#1D1718; --ink-soft:#4E4644; --ink-mute:#746A66; --shadow-rgb:43,17,20;
-```
-
-**Evergreen.** Deep forest, warm porcelain, brass.
-```css
---bg:#F4F2ED; --bg-deep:#EDEBE3; --bg-cool:#E9EAE3; --bg-rgb:244,242,237; --card:#FBFAF6;
---primary:#1F3D2F; --primary-2:#2E5A44; --primary-line:#33543F; --primary-rgb:31,61,47; --primary-2-rgb:46,90,68;
---accent:#B98A3E; --accent-soft:#C79B52; --accent-rgb:185,138,62;
---band-a:#294F3C; --band-b:#12241B; --on-dark:#F3F1EA;
---ink:#1D1718; --ink-soft:#4E4644; --ink-mute:#746A66; --shadow-rgb:20,38,29;
-```
-
-**Aubergine.** Plum, mauve paper, gold.
-```css
---bg:#F3EEF1; --bg-deep:#ECE4E9; --bg-cool:#EEE7EC; --bg-rgb:243,238,241; --card:#FBF7FA;
---primary:#3A2340; --primary-2:#5A3A62; --primary-line:#6C4874; --primary-rgb:58,35,64; --primary-2-rgb:90,58,98;
---accent:#C6A24E; --accent-soft:#D4B468; --accent-rgb:198,162,78;
---band-a:#513457; --band-b:#221425; --on-dark:#F1EAF0;
---ink:#1D1718; --ink-soft:#4E4644; --ink-mute:#746A66; --shadow-rgb:40,28,44;
-```
-
-To add a palette later, define the same tokens. Keep `--ink*` shared unless there is a reason not to.
+- **If there is existing code:** detect the framework and match it. Signals: `package.json` deps (`next`, `react`, `vue`), `tailwind.config.*` / `@tailwind` directives, `.tsx/.jsx` files, existing component conventions. Emit code that fits (component files, Tailwind classes mapped to tokens, etc.).
+- **If greenfield / unclear:** ask a short interview — "What are we building this in: plain HTML/CSS, Tailwind, or React/Next (+Tailwind)? Any existing components or design tokens to honor?" Then proceed.
+- **All three targets are first-class.** The token contract (§3) is the bridge:
+  - **HTML/CSS:** tokens in `:root`, as in the reference.
+  - **Tailwind:** map tokens to `theme.extend.colors` that reference the CSS variables; keep the same names.
+  - **React/Next:** expose tokens via a `:root` stylesheet or theme object; same token names.
 
 ---
 
-## 3. Anti-default rulebook (Kevin's tells — never ship these)
+## 2. The locked style (do not renegotiate)
 
-These come from direct review. Each is a hard "no."
+**Feel:** expensive, warm, editorial, calm-confident. Premium through restraint and typography.
 
-1. **No italic-last-word headline.** Do not italicize the final word of the hero headline (or any headline). The headline is one coherent statement. Emphasize a single word with **weight** or the **`--accent`/`--primary` color**, never italics.
-2. **No Anthropic-adjacent palette.** Never cream/ivory background + terracotta/coral/clay/rust/amber accent. (The default palettes already avoid this — do not drift back to it.)
-3. **No AI-purple / violet gradients**, no generic glassmorphism-on-everything, no Inter+slate-900 as the identity.
-4. **No default serifs for display.** Spectral (or Newsreader) — not Fraunces.
-5. **No half-tokenized color.** If any color is hardcoded outside `:root`, it is a bug. Grep the output for stray hex/`rgba(` before calling it done.
-6. **No dead reveals.** Any fade/scroll-in animation must rest visible.
+**Dials (fixed):** `DESIGN_VARIANCE 7 / MOTION 6 / VISUAL_DENSITY 4`.
+
+**Type:** **Spectral** (display: hero, section heads, feature titles, band) + **Work Sans** (body/UI). Eyebrows: Work Sans uppercase ~13px, letter-spacing ~0.14em, in `--primary`/`--accent`. Never Fraunces, never Inter-as-identity.
+
+**Layout:** header (wordmark + mark, nav, one CTA) · hero (two columns: copy left, pure-CSS product panel right) · proof strip (label + 5 glyph logos) · 3 feature cards with index numerals (`01 / 03`) · dark closing CTA band · footer. Radius `--r-sm/md/lg` = 10/16/22. Soft restrained shadows.
+
+**Motion (~6):** gentle hover lifts/scales + soft fade-ups via CSS transitions. No scroll libraries, no JS for these. Reveals rest visible (`animation-fill-mode: forwards`). Honor `prefers-reduced-motion`.
+
+Canonical implementation: [`reference/template.html`](reference/template.html). Match it; don't reinvent it.
 
 ---
 
-## 4. Pre-flight checklist (run before delivering)
+## 3. Token system (color is fully tokenized)
 
-- [ ] Design read stated with palette name (Oxblood unless told otherwise).
-- [ ] Type is Spectral (display) + Work Sans (body). No Fraunces, no Inter-identity.
-- [ ] Structure matches the reference: header · hero+panel · proof strip · 3 index-numbered feature cards · dark CTA band · footer.
-- [ ] **Every** color is a token. `grep -nEi '#[0-9a-f]{3,6}|rgba?\([0-9]'` returns hits ONLY inside `:root` and CSS-overridden SVG fallbacks.
-- [ ] Swapping the `:root` block to another palette reskins the **entire** page — hero, cards, closing band, footer, logo mark, and proof-strip glyphs.
-- [ ] No italic-last-word. No AI-purple. No dead reveals.
-- [ ] Motion is gentle (hover + soft fade-up), no scroll libraries.
+**Hard rule: every color is a token. Zero hardcoded color literals except in `:root` and the theme override blocks.** A single hardcoded color is a bug — it will not theme or dark-swap. Grep before delivering.
+
+**Token contract** (see [`reference/DESIGN.md`](reference/DESIGN.md) §2 for the full table):
+surfaces `--bg / --bg-deep / --bg-cool / --bg-rgb / --card`; brand `--primary / --primary-2 / --primary-line / --primary-rgb / --primary-2-rgb`; accent `--accent / --accent-soft / --accent-rgb`; band `--band-a / --band-b`; text `--ink / --ink-soft / --ink-mute`; on-dark `--on-dark`; interactive `--btn-bg / --btn-fg`; derived `--hairline` (= `rgba(var(--primary-rgb),0.12)`) and `--shadow-rgb`.
+
+- Tints use the `-rgb` triplets: `rgba(var(--primary-rgb), 0.12)` — never raw numbers.
+- Solid buttons use `--btn-bg`/`--btn-fg` (decoupled so dark mode flips them).
+- Inline SVG colors are set via CSS (`stroke`/`fill: var(--…)` or `currentColor`), never hardcoded attributes.
+
+**Palette library** (full light+dark values in [`reference/palettes.css`](reference/palettes.css); names the user can say):
+- **Oxblood** — default (burgundy / warm stone / bronze).
+- **Evergreen** — forest / porcelain / brass.
+- **Aubergine** — plum / mauve / gold.
+
+Swap a palette by replacing the `:root` block. Add one by defining the same tokens + a dark counterpart.
+
+---
+
+## 4. Responsive + dark mode (required on every build)
+
+**Dark mode** ships on every build. Provide dark tokens in BOTH:
+- `[data-theme="dark"] { … }` (manual toggle), and
+- `@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]) { … } }` (automatic).
+Dark values for all palettes are in `palettes.css`. Verify: body text light, cards dark surfaces, primary buttons use the accent `--btn-bg` with dark `--btn-fg`, hairlines lighten.
+
+**Responsive** down to 360px. Breakpoints: ≤1024 (tighten, reduce hero size) · ≤900 (hero → 1 col, nav condenses to wordmark+CTA, features → 2 col) · ≤760 (drop the decorative hero panel) · ≤700 (features → 1 col) · ≤600 (fluid `clamp()` type, ≥44px tap targets, 20px gutters). Add `min-width:0` to flex/grid children so they shrink. No horizontal overflow. No JS.
+
+---
+
+## 5. Components
+
+Full set demonstrated in [`reference/components.html`](reference/components.html), all tokenized + responsive + dark-capable: buttons (primary/ghost, sizes, states), forms (input/textarea/select/checkbox/inline subscribe, focus rings), navigation, cards (content + stat), badges/tags, and a 3-tier pricing table (one featured). Reuse these patterns; keep the same token names.
+
+---
+
+## 6. Anti-AI-tell rulebook (never ship these)
+
+The full catalog lives in [`reference/DESIGN.md`](reference/DESIGN.md) §6. Summary of hard "no"s:
+
+**Copy / voice**
+- **No em-dashes** — rewrite with comma / period / colon.
+- No triadic slogans or reflexive rule-of-three; no "It's not just X, it's Y", "Say goodbye to…", "The best part?".
+- No filler openers ("In today's fast-paced world", "In the ever-evolving landscape") or filler words (unlock, unleash, elevate, supercharge, seamless, robust, cutting-edge, game-changing, effortlessly).
+- Sentence case headings; specific nouns/numbers over superlatives; no emoji in headings/CTAs/labels; no placeholder residue.
+
+**Typography**
+- No italic-last-word emphasis (use weight or `--accent`). No random ALL-CAPS beyond small tracked eyebrows. No three identical feature cards — vary rhythm.
+
+**Visual**
+- No AI-purple/violet or mesh-gradient blobs; no cream+terracotta default; no all-Inter+slate identity; no glassmorphism-on-everything; no dead-center-on-dark hero by reflex; no stock 3D gradient blobs. Consistent icon family, never emoji-as-icons.
+
+**Motion**
+- No infinite looping micro-animations everywhere; no auto-parallax.
+
+**Code**
+- No hardcoded colors (full tokenization); no dead reveals; no leftover TODO/placeholder comments; semantic HTML, `alt` text, labeled inputs, visible focus, AA contrast, ≥44px tap targets.
+
+---
+
+## 7. DESIGN.md output (required deliverable)
+
+Every build emits a project `DESIGN.md` documenting the design system, so the work is extensible for future development and branding. Use [`reference/DESIGN.md`](reference/DESIGN.md) as the skeleton and fill it for the project: Overview → Principles → Foundations (color tokens + palettes + dark, type, layout/spacing, radius, elevation, motion) → Components → Content & Voice (with the anti-tell rules) → Accessibility → Theming & Stack → Changelog. Replace product name, copy, and any brand-specific values; keep the structure and token names.
+
+---
+
+## 8. Pre-flight checklist
+
+- [ ] Stack resolved (detected or interviewed); output matches it.
+- [ ] Design read stated with palette (Oxblood unless told otherwise).
+- [ ] Spectral + Work Sans. Structure matches the reference.
+- [ ] **Every** color is a token; grep shows literals only in `:root`/theme blocks/CSS-overridden SVG.
+- [ ] Swapping `:root` reskins the entire page; dark mode present in both `[data-theme]` and `@media`.
+- [ ] Responsive to 360px, no horizontal overflow, ≥44px tap targets.
+- [ ] Anti-AI-tell rulebook honored (em-dashes gone, no italic-last-word, no filler, etc.).
+- [ ] `DESIGN.md` emitted for the project.
 
 ---
 
 ## Reference files
 
-- [`reference/template.html`](reference/template.html) — the canonical Simba-Taste page (Oxblood default), fully tokenized. Start here.
-- [`reference/palettes.css`](reference/palettes.css) — the three palette `:root` blocks, copy-paste swappable.
+- [`reference/template.html`](reference/template.html) — canonical landing page: tokenized, responsive, light+dark. Start here.
+- [`reference/components.html`](reference/components.html) — component gallery (buttons, forms, nav, cards, badges, pricing), light+dark.
+- [`reference/palettes.css`](reference/palettes.css) — Oxblood / Evergreen / Aubergine, light + dark, copy-paste swappable.
+- [`reference/DESIGN.md`](reference/DESIGN.md) — the design-system doc and the skeleton every build emits.

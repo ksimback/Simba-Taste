@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Northwind — Where fast teams think.</title>
+<title>Northwind · Where fast teams think.</title>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Work+Sans:wght@400;450;500;600&display=swap" rel="stylesheet" />
@@ -30,6 +30,10 @@
     --band-b: #2B1114;
     --on-dark: #F3ECE4;
 
+    /* semantic interactive tokens (decoupled so dark mode can flip them) */
+    --btn-bg: var(--primary);
+    --btn-fg: var(--on-dark);
+
     --ink: #1D1718;
     --ink-soft: #4E4644;
     --ink-mute: #746A66;
@@ -44,6 +48,74 @@
     --r-md: 16px;
     --r-lg: 22px;
     --ease: cubic-bezier(0.22, 0.61, 0.36, 1);
+  }
+
+  /* === Oxblood dark palette (explicit opt-in) === */
+  [data-theme="dark"] {
+    --bg: #1D1311;
+    --bg-deep: #170F0E;
+    --bg-cool: #241A18;
+    --bg-rgb: 29,19,17;
+    --card: #2B211F;
+
+    --primary: #AE999C;
+    --primary-2: #B18E91;
+    --primary-line: #886A6D;
+    --primary-rgb: 174,153,156;
+    --primary-2-rgb: 177,142,145;
+
+    --accent: #B68544;
+    --accent-soft: #C19761;
+    --accent-rgb: 182,133,68;
+
+    --band-a: #38191B;
+    --band-b: #170F0E;
+    --on-dark: #F3ECE4;
+
+    --ink: #F4EDE6;
+    --ink-soft: #B4ACA6;
+    --ink-mute: #847C77;
+
+    --btn-bg: #B68544;
+    --btn-fg: #170F0E;
+
+    --hairline: rgba(var(--primary-rgb), 0.16);
+    --shadow-rgb: 0,0,0;
+  }
+
+  /* === Oxblood dark palette (system preference, unless forced light) === */
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #1D1311;
+      --bg-deep: #170F0E;
+      --bg-cool: #241A18;
+      --bg-rgb: 29,19,17;
+      --card: #2B211F;
+
+      --primary: #AE999C;
+      --primary-2: #B18E91;
+      --primary-line: #886A6D;
+      --primary-rgb: 174,153,156;
+      --primary-2-rgb: 177,142,145;
+
+      --accent: #B68544;
+      --accent-soft: #C19761;
+      --accent-rgb: 182,133,68;
+
+      --band-a: #38191B;
+      --band-b: #170F0E;
+      --on-dark: #F3ECE4;
+
+      --ink: #F4EDE6;
+      --ink-soft: #B4ACA6;
+      --ink-mute: #847C77;
+
+      --btn-bg: #B68544;
+      --btn-fg: #170F0E;
+
+      --hairline: rgba(var(--primary-rgb), 0.16);
+      --shadow-rgb: 0,0,0;
+    }
   }
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -79,7 +151,7 @@
 
   /* ---------- SVG TOKEN OVERRIDES (CSS wins over presentation attributes) ---------- */
   .brand .mark svg rect[fill] { fill: var(--primary); }
-  .brand .mark svg path[stroke] { stroke: var(--on-dark); }
+  .brand .mark svg path[stroke] { stroke: var(--btn-fg); }
   .brand .mark svg circle[fill] { fill: var(--accent); }
   .hero-note svg path[stroke] { stroke: var(--ink-mute); }
   .panel-search svg [stroke] { stroke: var(--ink-mute); }
@@ -157,8 +229,8 @@
     white-space: nowrap;
   }
   .btn-primary {
-    background: var(--primary);
-    color: var(--on-dark);
+    background: var(--btn-bg);
+    color: var(--btn-fg);
     box-shadow: var(--shadow-sm);
   }
   .btn-primary:hover {
@@ -315,7 +387,7 @@
     background: linear-gradient(135deg, var(--primary-2), var(--primary));
     flex: none;
     display: grid; place-items: center;
-    color: var(--on-dark); font-size: 11px; font-weight: 600;
+    color: var(--btn-fg); font-size: 11px; font-weight: 600;
     font-family: "Spectral", serif;
   }
   .doc-card .avatar.brass { background: linear-gradient(135deg, var(--accent-soft), var(--accent)); }
@@ -559,15 +631,15 @@
   }
   .cta-band .btn {
     position: relative;
-    background: var(--bg);
-    color: var(--primary);
+    background: var(--btn-bg);
+    color: var(--btn-fg);
     padding: 16px 30px;
     font-size: 16px;
     font-weight: 600;
     box-shadow: 0 14px 34px rgba(var(--shadow-rgb), 0.28);
   }
   .cta-band .btn:hover {
-    background: var(--card);
+    background: var(--btn-bg);
     transform: translateY(-3px);
     box-shadow: 0 20px 44px rgba(var(--shadow-rgb), 0.34);
   }
@@ -608,11 +680,65 @@
   }
   .foot-links a:hover { color: var(--primary); }
 
-  @media (max-width: 1100px) {
-    .hero { grid-template-columns: 1fr; gap: 72px; }
-    h1 { font-size: 58px; }
-    .panel-stage { max-width: 560px; }
+  /* ---------- RESPONSIVE ---------- */
+  @media (max-width: 1024px) {
+    .wrap { padding: 0 32px; }
+    h1 { font-size: 56px; }
+    .hero { gap: 44px; padding: 72px 0 76px; }
+    .features { padding: 84px 0 76px; }
+    .section-head h2 { font-size: 38px; }
+    .cta-band { padding: 60px 52px; }
+    .cta-band h2 { font-size: 40px; }
+  }
+
+  @media (max-width: 900px) {
+    .hero {
+      grid-template-columns: 1fr;
+      gap: 56px;
+    }
+    .subhead { max-width: none; }
+    .panel-stage { max-width: 560px; width: 100%; margin: 0 auto; perspective: none; }
+    .panel { transform: none; }
+    .panel-stage:hover .panel { transform: translateY(-4px); }
+    .chip.top { right: 0; }
+    .chip.bottom { left: 0; }
+    .navlinks { display: none; }
+    .feature-grid { grid-template-columns: repeat(2, 1fr); }
+    .feature-grid .feature:nth-child(3) { grid-column: 1 / -1; }
     .cta-band { flex-direction: column; align-items: flex-start; }
+    .proof-inner { gap: 24px; }
+  }
+
+  @media (max-width: 700px) {
+    .feature-grid { grid-template-columns: 1fr; }
+    .feature-grid .feature:nth-child(3) { grid-column: auto; }
+  }
+
+  /* Decorative hero panel is dropped on phones to keep the hero clean and prevent overflow. */
+  @media (max-width: 760px) {
+    .panel-stage { display: none; }
+    .hero { gap: 0; }
+    /* let flex/grid items shrink below their content size (min-width defaults to auto) */
+    .hero, .hero-copy, .proof-inner, .logos, .feature-grid, .feature, .cta-band, .section-head { min-width: 0; }
+    .hero > *, .cta-band > *, .feature > * { min-width: 0; max-width: 100%; }
+    h1, h2, p, .subhead { overflow-wrap: anywhere; }
+  }
+
+  @media (max-width: 600px) {
+    .wrap { padding: 0 20px; }
+    nav { height: 64px; }
+    h1 { font-size: clamp(36px, 11vw, 52px); }
+    .subhead { font-size: clamp(16px, 4.4vw, 19px); }
+    .section-head h2 { font-size: clamp(28px, 7.5vw, 38px); }
+    .cta-band h2 { font-size: clamp(27px, 7.4vw, 40px); }
+    .hero { padding: 52px 0 60px; }
+    .features { padding: 64px 0 60px; }
+    .closing { padding: 0 0 72px; }
+    .cta-band { padding: 44px 28px; border-radius: 20px; }
+    .btn { min-height: 44px; padding: 12px 20px; }
+    .hero-ctas { flex-wrap: wrap; }
+    .hero-ctas .btn { min-height: 48px; }
+    .chip { display: none; }
   }
 </style>
 </head>
@@ -647,7 +773,7 @@
       <div class="hero-copy">
         <span class="eyebrow"><span class="dot"></span> One shared brain for your team</span>
         <h1>Where fast teams <span class="accent">think.</span></h1>
-        <p class="subhead">Northwind turns scattered notes, docs, and decisions into one shared brain — with AI that keeps everyone in sync.</p>
+        <p class="subhead">Northwind turns scattered notes, docs, and decisions into one shared brain, kept in sync by AI everyone can trust.</p>
         <div class="hero-ctas">
           <button class="btn btn-primary">Start free <span class="arw" aria-hidden="true">
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h9M8 4l4 4-4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>

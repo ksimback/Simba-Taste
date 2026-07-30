@@ -1,108 +1,71 @@
-/*
- * palettes.css — swappable design-token palettes for template.html
- *
- * Each block below is a COMPLETE, copy-paste-swappable :root definition.
- * To reskin the page, replace the :root{} block in template.html with any
- * one of these. All colors on the page resolve through these tokens, so
- * changing only :root swaps the entire palette (including inline SVG marks,
- * which are re-colored via CSS presentation-attribute overrides).
- *
- * Token contract (identical across all palettes):
- *   surfaces : --bg --bg-deep --bg-cool --bg-rgb --card
- *   primary  : --primary --primary-2 --primary-line --primary-rgb --primary-2-rgb
- *   accent   : --accent --accent-soft --accent-rgb
- *   dark band: --band-a --band-b --on-dark
- *   text     : --ink --ink-soft --ink-mute
- *   utility  : --hairline --shadow-rgb
- *   (keep the existing --r-sm/--r-md/--r-lg/--ease radius & easing tokens)
- */
+/* Simba-Taste palette library — light + dark. Default: Oxblood.
+   Swap by replacing the :root block; dark mode via [data-theme="dark"] (mirror under @media (prefers-color-scheme:dark)). */
 
-/* === Oxblood (default) === */
+/* === Oxblood — light === */
 :root {
-  --bg: #F2EDE6;
-  --bg-deep: #EAE3D9;
-  --bg-cool: #EDE7DE;
-  --bg-rgb: 242,237,230;
-  --card: #F8F5F0;
-
-  --primary: #4A1D22;
-  --primary-2: #6E2E34;
-  --primary-line: #833C42;
-  --primary-rgb: 74,29,34;
-  --primary-2-rgb: 110,46,52;
-
-  --accent: #B07A34;
-  --accent-soft: #C6924B;
-  --accent-rgb: 176,122,52;
-
-  --band-a: #632A2F;
-  --band-b: #2B1114;
-  --on-dark: #F3ECE4;
-
-  --ink: #1D1718;
-  --ink-soft: #4E4644;
-  --ink-mute: #746A66;
-
-  --hairline: rgba(var(--primary-rgb), 0.12);
-  --shadow-rgb: 43,17,20;
+  --bg:#F2EDE6; --bg-deep:#EAE3D9; --bg-cool:#EDE7DE; --bg-rgb:242,237,230; --card:#F8F5F0;
+  --primary:#4A1D22; --primary-2:#6E2E34; --primary-line:#833C42;
+  --primary-rgb:74,29,34; --primary-2-rgb:110,46,52;
+  --accent:#B07A34; --accent-soft:#C6924B; --accent-rgb:176,122,52;
+  --band-a:#632A2F; --band-b:#2B1114; --on-dark:#F3ECE4;
+  --ink:#1D1718; --ink-soft:#4E4644; --ink-mute:#746A66;
+  --btn-bg:var(--primary); --btn-fg:var(--on-dark);
+  --hairline:rgba(var(--primary-rgb),0.12); --shadow-rgb:43,17,20;
+}
+/* === Oxblood — dark === */
+[data-theme="dark"] {
+  --bg:#1D1311; --bg-deep:#170F0E; --bg-cool:#241A18; --bg-rgb:29,19,17; --card:#2B211F;
+  --primary:#AE999C; --primary-2:#B18E91; --primary-line:#886A6D;
+  --primary-rgb:174,153,156; --primary-2-rgb:177,142,145;
+  --accent:#B68544; --accent-soft:#C19761; --accent-rgb:182,133,68;
+  --band-a:#38191B; --band-b:#170F0E; --on-dark:#F3ECE4;
+  --ink:#F4EDE6; --ink-soft:#B4ACA6; --ink-mute:#847C77;
+  --btn-bg:#B68544; --btn-fg:#170F0E;
+  --hairline:rgba(var(--primary-rgb),0.16); --shadow-rgb:0,0,0;
 }
 
-/* === Evergreen === */
+/* === Evergreen — light === */
 :root {
-  --bg: #F4F2ED;
-  --bg-deep: #EDEBE3;
-  --bg-cool: #E9EAE3;
-  --bg-rgb: 244,242,237;
-  --card: #FBFAF6;
-
-  --primary: #1F3D2F;
-  --primary-2: #2E5A44;
-  --primary-line: #33543F;
-  --primary-rgb: 31,61,47;
-  --primary-2-rgb: 46,90,68;
-
-  --accent: #B98A3E;
-  --accent-soft: #C79B52;
-  --accent-rgb: 185,138,62;
-
-  --band-a: #294F3C;
-  --band-b: #12241B;
-  --on-dark: #F3F1EA;
-
-  --ink: #1D1718;
-  --ink-soft: #4E4644;
-  --ink-mute: #746A66;
-
-  --hairline: rgba(var(--primary-rgb), 0.12);
-  --shadow-rgb: 20,38,29;
+  --bg:#F4F2ED; --bg-deep:#EDEBE3; --bg-cool:#E9EAE3; --bg-rgb:244,242,237; --card:#FBFAF6;
+  --primary:#1F3D2F; --primary-2:#2E5A44; --primary-line:#33543F;
+  --primary-rgb:31,61,47; --primary-2-rgb:46,90,68;
+  --accent:#B98A3E; --accent-soft:#C79B52; --accent-rgb:185,138,62;
+  --band-a:#294F3C; --band-b:#12241B; --on-dark:#F3F1EA;
+  --ink:#1D1718; --ink-soft:#4E4644; --ink-mute:#746A66;
+  --btn-bg:var(--primary); --btn-fg:var(--on-dark);
+  --hairline:rgba(var(--primary-rgb),0.12); --shadow-rgb:20,38,29;
+}
+/* === Evergreen — dark === */
+[data-theme="dark"] {
+  --bg:#171813; --bg-deep:#12130F; --bg-cool:#1E1F1A; --bg-rgb:23,24,19; --card:#252621;
+  --primary:#9AA8A1; --primary-2:#8EA69A; --primary-line:#6B7F76;
+  --primary-rgb:154,168,161; --primary-2-rgb:142,166,154;
+  --accent:#BF934D; --accent-soft:#C8A468; --accent-rgb:191,147,77;
+  --band-a:#1C2E24; --band-b:#12130F; --on-dark:#F3F1EA;
+  --ink:#F4F2EB; --ink-soft:#B2B1AA; --ink-mute:#81817B;
+  --btn-bg:#BF934D; --btn-fg:#12130F;
+  --hairline:rgba(var(--primary-rgb),0.16); --shadow-rgb:0,0,0;
 }
 
-/* === Aubergine === */
+/* === Aubergine — light === */
 :root {
-  --bg: #F3EEF1;
-  --bg-deep: #ECE4E9;
-  --bg-cool: #EEE7EC;
-  --bg-rgb: 243,238,241;
-  --card: #FBF7FA;
-
-  --primary: #3A2340;
-  --primary-2: #5A3A62;
-  --primary-line: #6C4874;
-  --primary-rgb: 58,35,64;
-  --primary-2-rgb: 90,58,98;
-
-  --accent: #C6A24E;
-  --accent-soft: #D4B468;
-  --accent-rgb: 198,162,78;
-
-  --band-a: #513457;
-  --band-b: #221425;
-  --on-dark: #F1EAF0;
-
-  --ink: #1D1718;
-  --ink-soft: #4E4644;
-  --ink-mute: #746A66;
-
-  --hairline: rgba(var(--primary-rgb), 0.12);
-  --shadow-rgb: 40,28,44;
+  --bg:#F3EEF1; --bg-deep:#ECE4E9; --bg-cool:#EEE7EC; --bg-rgb:243,238,241; --card:#FBF7FA;
+  --primary:#3A2340; --primary-2:#5A3A62; --primary-line:#6C4874;
+  --primary-rgb:58,35,64; --primary-2-rgb:90,58,98;
+  --accent:#C6A24E; --accent-soft:#D4B468; --accent-rgb:198,162,78;
+  --band-a:#513457; --band-b:#221425; --on-dark:#F1EAF0;
+  --ink:#1D1718; --ink-soft:#4E4644; --ink-mute:#746A66;
+  --btn-bg:var(--primary); --btn-fg:var(--on-dark);
+  --hairline:rgba(var(--primary-rgb),0.12); --shadow-rgb:40,28,44;
+}
+/* === Aubergine — dark === */
+[data-theme="dark"] {
+  --bg:#1B1416; --bg-deep:#161012; --bg-cool:#221B1D; --bg-rgb:27,20,22; --card:#292224;
+  --primary:#A69CA9; --primary-2:#A695AA; --primary-line:#7D6E81;
+  --primary-rgb:166,156,169; --primary-2-rgb:166,149,170;
+  --accent:#CBA95C; --accent-soft:#D3B675; --accent-rgb:203,169,92;
+  --band-a:#2E1D2F; --band-b:#161012; --on-dark:#F1EAF0;
+  --ink:#F2EBF1; --ink-soft:#B2AAAF; --ink-mute:#827B7F;
+  --btn-bg:#CBA95C; --btn-fg:#161012;
+  --hairline:rgba(var(--primary-rgb),0.16); --shadow-rgb:0,0,0;
 }

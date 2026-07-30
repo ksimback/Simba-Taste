@@ -1,0 +1,1144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Simba-Taste · Components</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Work+Sans:wght@400;450;500;600&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    /* === Oxblood (default) === */
+    --bg: #F2EDE6;
+    --bg-deep: #EAE3D9;
+    --bg-cool: #EDE7DE;
+    --bg-rgb: 242,237,230;
+    --card: #F8F5F0;
+
+    --primary: #4A1D22;
+    --primary-2: #6E2E34;
+    --primary-line: #833C42;
+    --primary-rgb: 74,29,34;
+    --primary-2-rgb: 110,46,52;
+
+    --accent: #B07A34;
+    --accent-soft: #C6924B;
+    --accent-rgb: 176,122,52;
+
+    --band-a: #632A2F;
+    --band-b: #2B1114;
+    --on-dark: #F3ECE4;
+
+    --ink: #1D1718;
+    --ink-soft: #4E4644;
+    --ink-mute: #746A66;
+
+    --btn-bg: var(--primary);
+    --btn-fg: var(--on-dark);
+
+    --hairline: rgba(var(--primary-rgb), 0.12);
+    --shadow-rgb: 43,17,20;
+
+    --shadow-sm: 0 1px 2px rgba(var(--shadow-rgb), 0.05), 0 6px 16px rgba(var(--shadow-rgb), 0.06);
+    --shadow-md: 0 2px 6px rgba(var(--shadow-rgb), 0.06), 0 18px 40px rgba(var(--shadow-rgb), 0.10);
+    --shadow-lg: 0 30px 70px rgba(var(--shadow-rgb), 0.18), 0 8px 24px rgba(var(--shadow-rgb), 0.10);
+    --r-sm: 10px;
+    --r-md: 16px;
+    --r-lg: 22px;
+    --ease: cubic-bezier(0.22, 0.61, 0.36, 1);
+  }
+
+  [data-theme="dark"] {
+    --bg: #1D1311;
+    --bg-deep: #170F0E;
+    --bg-cool: #241A18;
+    --bg-rgb: 29,19,17;
+    --card: #2B211F;
+
+    --primary: #AE999C;
+    --primary-2: #B18E91;
+    --primary-line: #886A6D;
+    --primary-rgb: 174,153,156;
+    --primary-2-rgb: 177,142,145;
+
+    --accent: #B68544;
+    --accent-soft: #C19761;
+    --accent-rgb: 182,133,68;
+
+    --band-a: #38191B;
+    --band-b: #170F0E;
+    --on-dark: #F3ECE4;
+
+    --ink: #F4EDE6;
+    --ink-soft: #B4ACA6;
+    --ink-mute: #847C77;
+
+    --btn-bg: #B68544;
+    --btn-fg: #170F0E;
+
+    --hairline: rgba(var(--primary-rgb), 0.16);
+    --shadow-rgb: 0,0,0;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #1D1311;
+      --bg-deep: #170F0E;
+      --bg-cool: #241A18;
+      --bg-rgb: 29,19,17;
+      --card: #2B211F;
+
+      --primary: #AE999C;
+      --primary-2: #B18E91;
+      --primary-line: #886A6D;
+      --primary-rgb: 174,153,156;
+      --primary-2-rgb: 177,142,145;
+
+      --accent: #B68544;
+      --accent-soft: #C19761;
+      --accent-rgb: 182,133,68;
+
+      --band-a: #38191B;
+      --band-b: #170F0E;
+      --on-dark: #F3ECE4;
+
+      --ink: #F4EDE6;
+      --ink-soft: #B4ACA6;
+      --ink-mute: #847C77;
+
+      --btn-bg: #B68544;
+      --btn-fg: #170F0E;
+
+      --hairline: rgba(var(--primary-rgb), 0.16);
+      --shadow-rgb: 0,0,0;
+    }
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: "Work Sans", system-ui, -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    font-size: 17px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    background:
+      radial-gradient(1200px 700px at 78% -8%, rgba(var(--primary-2-rgb), 0.07), transparent 60%),
+      radial-gradient(900px 600px at 8% 12%, rgba(var(--primary-2-rgb), 0.05), transparent 55%),
+      linear-gradient(180deg, var(--bg) 0%, var(--bg-cool) 100%);
+  }
+
+  .wrap { max-width: 1200px; margin: 0 auto; padding: 0 40px; }
+
+  a { color: inherit; text-decoration: none; }
+
+  /* ---------- SVG TOKEN OVERRIDES ---------- */
+  .brand .mark svg rect[fill] { fill: var(--primary); }
+  .brand .mark svg path[stroke] { stroke: var(--on-dark); }
+  .brand .mark svg circle[fill] { fill: var(--accent); }
+  .demo-nav .mark svg rect[fill] { fill: var(--primary); }
+  .demo-nav .mark svg path[stroke] { stroke: var(--on-dark); }
+  .demo-nav .mark svg circle[fill] { fill: var(--accent); }
+  .btn-primary svg [stroke] { stroke: currentColor; }
+  .field .ic svg [stroke] { stroke: var(--ink-mute); }
+
+  /* ---------- PAGE HEADER ---------- */
+  header.page {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    backdrop-filter: saturate(1.2) blur(10px);
+    background: rgba(var(--bg-rgb), 0.72);
+    border-bottom: 1px solid var(--hairline);
+  }
+  header.page nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 74px;
+    gap: 16px;
+  }
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    font-family: "Spectral", serif;
+    font-weight: 600;
+    font-size: 22px;
+    letter-spacing: -0.01em;
+    color: var(--primary);
+  }
+  .brand .mark { width: 30px; height: 30px; display: grid; place-items: center; }
+  .head-tools { display: flex; align-items: center; gap: 14px; }
+  .head-tag {
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--ink-mute);
+  }
+
+  /* theme toggle */
+  .theme-toggle {
+    font-family: "Work Sans", sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--ink-soft);
+    background: rgba(var(--primary-rgb), 0.05);
+    border: 1px solid var(--primary-line);
+    border-radius: 100px;
+    padding: 8px 16px;
+    cursor: pointer;
+    transition: background 0.25s var(--ease), transform 0.25s var(--ease);
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .theme-toggle:hover { background: rgba(var(--primary-rgb), 0.09); transform: translateY(-1px); }
+
+  /* ---------- INTRO ---------- */
+  .intro { padding: 72px 0 44px; }
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--primary-2);
+    background: rgba(var(--primary-2-rgb), 0.08);
+    border: 1px solid rgba(var(--primary-2-rgb), 0.16);
+    padding: 7px 14px;
+    border-radius: 100px;
+    margin-bottom: 26px;
+  }
+  .eyebrow .dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 0 0 3px rgba(var(--accent-rgb), 0.2);
+  }
+  .intro h1 {
+    font-family: "Spectral", serif;
+    font-weight: 500;
+    font-size: 60px;
+    line-height: 1.05;
+    letter-spacing: -0.025em;
+    color: var(--ink);
+    margin-bottom: 22px;
+  }
+  .intro h1 .accent { color: var(--primary); font-weight: 600; }
+  .intro p {
+    font-size: 19px;
+    line-height: 1.62;
+    color: var(--ink-soft);
+    max-width: 560px;
+  }
+
+  /* ---------- SECTION SCAFFOLD ---------- */
+  .section { padding: 40px 0; border-top: 1px solid var(--hairline); }
+  .section-label {
+    display: flex;
+    align-items: baseline;
+    gap: 14px;
+    margin-bottom: 30px;
+  }
+  .section-label .idx {
+    font-family: "Spectral", serif;
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--accent);
+  }
+  .section-label h2 {
+    font-family: "Spectral", serif;
+    font-weight: 500;
+    font-size: 30px;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+  }
+  .section-label p {
+    font-size: 14.5px;
+    color: var(--ink-mute);
+    margin-left: auto;
+    max-width: 340px;
+    text-align: right;
+  }
+
+  .specimen {
+    background: var(--card);
+    border: 1px solid var(--hairline);
+    border-radius: var(--r-md);
+    box-shadow: var(--shadow-sm);
+    padding: 34px 32px;
+  }
+  .row-label {
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--ink-mute);
+    margin-bottom: 14px;
+  }
+  .stack { display: flex; flex-direction: column; gap: 30px; }
+  .cluster { display: flex; flex-wrap: wrap; gap: 14px; align-items: center; }
+
+  /* ---------- BUTTONS ---------- */
+  .btn {
+    font-family: "Work Sans", sans-serif;
+    font-size: 15px;
+    font-weight: 500;
+    border-radius: var(--r-sm);
+    padding: 11px 20px;
+    cursor: pointer;
+    border: 1px solid transparent;
+    transition: transform 0.25s var(--ease), box-shadow 0.25s var(--ease), background 0.25s var(--ease);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+    white-space: nowrap;
+    min-height: 44px;
+  }
+  .btn-primary {
+    background: var(--btn-bg);
+    color: var(--btn-fg);
+    box-shadow: var(--shadow-sm);
+  }
+  .btn-primary:hover {
+    background: var(--primary-2);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+  }
+  .btn-primary:active { transform: translateY(0); box-shadow: var(--shadow-sm); }
+  .btn-primary .arw { transition: transform 0.28s var(--ease); }
+  .btn-primary:hover .arw { transform: translateX(3px); }
+
+  .btn-ghost {
+    background: transparent;
+    color: var(--primary);
+    border: 1px solid var(--primary-line);
+  }
+  .btn-ghost:hover { background: rgba(var(--primary-rgb), 0.05); transform: translateY(-2px); }
+  .btn-ghost:active { background: rgba(var(--primary-rgb), 0.10); transform: translateY(0); }
+
+  .btn-sm { font-size: 13.5px; padding: 8px 15px; min-height: 44px; border-radius: var(--r-sm); }
+
+  .btn:disabled,
+  .btn[disabled] {
+    opacity: 0.42;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+    pointer-events: none;
+  }
+
+  .state-hint { font-size: 13px; color: var(--ink-mute); margin-top: 4px; }
+  .state-hint code {
+    font-family: "Spectral", serif;
+    font-style: italic;
+    color: var(--primary-2);
+  }
+
+  /* ---------- FORM CONTROLS ---------- */
+  .form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 26px 32px;
+  }
+  .field { display: flex; flex-direction: column; gap: 8px; position: relative; }
+  .field.full { grid-column: 1 / -1; }
+  .field label {
+    font-size: 13.5px;
+    font-weight: 500;
+    color: var(--ink-soft);
+    letter-spacing: 0.01em;
+  }
+  .input,
+  .textarea,
+  .select {
+    font-family: "Work Sans", sans-serif;
+    font-size: 15px;
+    color: var(--ink);
+    background: var(--bg);
+    border: 1px solid var(--hairline);
+    border-radius: var(--r-sm);
+    padding: 12px 14px;
+    width: 100%;
+    min-height: 44px;
+    transition: border-color 0.25s var(--ease), box-shadow 0.25s var(--ease), background 0.25s var(--ease);
+  }
+  .input::placeholder,
+  .textarea::placeholder { color: var(--ink-mute); }
+  .textarea { min-height: 108px; resize: vertical; line-height: 1.55; }
+  .input:hover,
+  .textarea:hover,
+  .select:hover { border-color: var(--primary-line); }
+  .input:focus,
+  .textarea:focus,
+  .select:focus {
+    outline: none;
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(var(--accent-rgb), 0.22);
+    background: var(--card);
+  }
+  .select {
+    appearance: none;
+    -webkit-appearance: none;
+    background-image:
+      linear-gradient(45deg, transparent 50%, rgba(var(--primary-rgb), 0.55) 50%),
+      linear-gradient(135deg, rgba(var(--primary-rgb), 0.55) 50%, transparent 50%);
+    background-position: calc(100% - 20px) 50%, calc(100% - 15px) 50%;
+    background-size: 5px 5px, 5px 5px;
+    background-repeat: no-repeat;
+    padding-right: 40px;
+    cursor: pointer;
+  }
+
+  /* checkbox */
+  .check {
+    display: flex;
+    align-items: flex-start;
+    gap: 11px;
+    cursor: pointer;
+    user-select: none;
+    min-height: 44px;
+    align-content: center;
+    flex-wrap: wrap;
+  }
+  .check input { position: absolute; opacity: 0; width: 0; height: 0; }
+  .check .box {
+    flex: none;
+    width: 22px; height: 22px;
+    margin-top: 1px;
+    border-radius: 7px;
+    border: 1px solid var(--primary-line);
+    background: var(--bg);
+    display: grid;
+    place-items: center;
+    transition: background 0.2s var(--ease), border-color 0.2s var(--ease), box-shadow 0.2s var(--ease);
+  }
+  .check .box svg {
+    width: 13px; height: 13px;
+    stroke: var(--btn-fg);
+    stroke-width: 2.4;
+    fill: none;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    opacity: 0;
+    transform: scale(0.6);
+    transition: opacity 0.2s var(--ease), transform 0.2s var(--ease);
+  }
+  .check input:checked + .box {
+    background: var(--accent);
+    border-color: var(--accent);
+  }
+  .check input:checked + .box svg { opacity: 1; transform: scale(1); }
+  .check input:focus-visible + .box {
+    box-shadow: 0 0 0 3px rgba(var(--accent-rgb), 0.22);
+  }
+  .check .ctext { font-size: 14.5px; color: var(--ink-soft); line-height: 1.4; }
+
+  /* subscribe inline form */
+  .subscribe {
+    display: flex;
+    gap: 12px;
+    background: var(--bg);
+    border: 1px solid var(--hairline);
+    border-radius: var(--r-md);
+    padding: 10px;
+    max-width: 480px;
+  }
+  .subscribe input {
+    flex: 1;
+    font-family: "Work Sans", sans-serif;
+    font-size: 15px;
+    color: var(--ink);
+    background: transparent;
+    border: none;
+    padding: 8px 12px;
+    min-height: 44px;
+  }
+  .subscribe input::placeholder { color: var(--ink-mute); }
+  .subscribe input:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(var(--accent-rgb), 0.22);
+    border-radius: var(--r-sm);
+  }
+
+  /* ---------- DEMO NAV ---------- */
+  .nav-demo-frame {
+    border: 1px solid var(--hairline);
+    border-radius: var(--r-md);
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+  }
+  .demo-nav {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    height: 68px;
+    padding: 0 24px;
+    background: rgba(var(--bg-rgb), 0.72);
+    border-bottom: 1px solid var(--hairline);
+    backdrop-filter: saturate(1.2) blur(10px);
+  }
+  .demo-nav .brand { font-size: 20px; }
+  .demo-nav .mark { width: 28px; height: 28px; }
+  .demo-links {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    margin-left: auto;
+    margin-right: 26px;
+  }
+  .demo-links a {
+    font-size: 15px;
+    font-weight: 450;
+    color: var(--ink-soft);
+    position: relative;
+    transition: color 0.25s var(--ease);
+  }
+  .demo-links a::after {
+    content: "";
+    position: absolute;
+    left: 0; bottom: -6px;
+    width: 100%; height: 1.5px;
+    background: var(--accent);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s var(--ease);
+  }
+  .demo-links a:hover { color: var(--primary); }
+  .demo-links a:hover::after { transform: scaleX(1); }
+  .demo-nav .nav-cta { padding: 10px 18px; min-height: 40px; }
+  .demo-burger {
+    display: none;
+    margin-left: auto;
+    width: 44px; height: 44px;
+    border: 1px solid var(--primary-line);
+    border-radius: var(--r-sm);
+    background: transparent;
+    cursor: pointer;
+    place-items: center;
+  }
+  .demo-burger span {
+    display: block;
+    width: 18px; height: 1.7px;
+    background: var(--primary);
+    box-shadow: 0 6px 0 var(--primary), 0 -6px 0 var(--primary);
+  }
+  .nav-demo-note {
+    font-size: 13px;
+    color: var(--ink-mute);
+    padding: 12px 20px;
+    background: var(--card);
+  }
+
+  /* ---------- CARDS ---------- */
+  .card-grid {
+    display: grid;
+    grid-template-columns: 1.3fr 1fr;
+    gap: 24px;
+  }
+  .content-card {
+    background: var(--card);
+    border: 1px solid var(--hairline);
+    border-radius: var(--r-md);
+    box-shadow: var(--shadow-sm);
+    padding: 28px 28px 30px;
+    transition: transform 0.35s var(--ease), box-shadow 0.35s var(--ease), border-color 0.35s var(--ease);
+  }
+  .content-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-md);
+    border-color: rgba(var(--primary-rgb), 0.20);
+  }
+  .content-card .kicker {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--primary-2);
+    margin-bottom: 12px;
+  }
+  .content-card h3 {
+    font-family: "Spectral", serif;
+    font-weight: 600;
+    font-size: 24px;
+    letter-spacing: -0.01em;
+    color: var(--ink);
+    margin-bottom: 10px;
+  }
+  .content-card p {
+    font-size: 15.5px;
+    line-height: 1.6;
+    color: var(--ink-soft);
+    margin-bottom: 20px;
+  }
+  .card-foot {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding-top: 18px;
+    border-top: 1px solid var(--hairline);
+  }
+  .card-foot .avatar {
+    width: 30px; height: 30px; border-radius: 9px;
+    background: linear-gradient(135deg, var(--primary-2), var(--primary));
+    display: grid; place-items: center;
+    color: var(--on-dark); font-size: 12px; font-weight: 600;
+    font-family: "Spectral", serif;
+    flex: none;
+  }
+  .card-foot .meta { font-size: 13px; color: var(--ink-mute); }
+  .card-foot .meta b { color: var(--ink-soft); font-weight: 500; display: block; }
+
+  .stat-card {
+    background: linear-gradient(168deg, var(--card) 0%, var(--bg) 100%);
+    border: 1px solid var(--hairline);
+    border-radius: var(--r-md);
+    box-shadow: var(--shadow-sm);
+    padding: 28px 28px 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    transition: transform 0.35s var(--ease), box-shadow 0.35s var(--ease);
+  }
+  .stat-card:hover { transform: translateY(-5px); box-shadow: var(--shadow-md); }
+  .stat-card .slabel {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--ink-mute);
+  }
+  .stat-card .snum {
+    font-family: "Spectral", serif;
+    font-weight: 600;
+    font-size: 52px;
+    line-height: 1;
+    letter-spacing: -0.02em;
+    color: var(--primary);
+    margin: 8px 0 4px;
+  }
+  .stat-card .strend {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13.5px;
+    color: var(--primary-2);
+    font-weight: 500;
+  }
+  .stat-card .strend .up {
+    display: inline-flex;
+    width: 18px; height: 18px;
+    border-radius: 50%;
+    background: rgba(var(--accent-rgb), 0.15);
+    color: var(--accent);
+    place-items: center;
+    justify-content: center;
+    font-size: 11px;
+  }
+
+  /* ---------- BADGES ---------- */
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    font-size: 12.5px;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+    padding: 6px 13px;
+    border-radius: 100px;
+  }
+  .badge.primary {
+    color: var(--primary-2);
+    background: rgba(var(--primary-2-rgb), 0.10);
+    border: 1px solid rgba(var(--primary-2-rgb), 0.20);
+  }
+  .badge.accent {
+    color: var(--accent);
+    background: rgba(var(--accent-rgb), 0.13);
+    border: 1px solid rgba(var(--accent-rgb), 0.26);
+  }
+  .badge.solid {
+    color: var(--btn-fg);
+    background: var(--btn-bg);
+  }
+  .badge.outline {
+    color: var(--primary);
+    background: transparent;
+    border: 1px solid var(--primary-line);
+  }
+  .badge .pulse {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: currentColor;
+    animation: pulse 2.4s var(--ease) infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.35; transform: scale(0.8); }
+  }
+
+  /* ---------- PRICING ---------- */
+  .pricing-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    align-items: start;
+  }
+  .tier {
+    background: var(--card);
+    border: 1px solid var(--hairline);
+    border-radius: var(--r-lg);
+    box-shadow: var(--shadow-sm);
+    padding: 34px 30px 36px;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.35s var(--ease), box-shadow 0.35s var(--ease), border-color 0.35s var(--ease);
+  }
+  .tier:hover { transform: translateY(-5px); box-shadow: var(--shadow-md); }
+  .tier.featured {
+    border: 1.5px solid var(--accent);
+    box-shadow: var(--shadow-md);
+    transform: translateY(-8px);
+    position: relative;
+  }
+  .tier.featured:hover { transform: translateY(-12px); box-shadow: var(--shadow-lg); }
+  .tier .tier-flag {
+    position: absolute;
+    top: 20px; right: 24px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--accent);
+    background: rgba(var(--accent-rgb), 0.13);
+    border: 1px solid rgba(var(--accent-rgb), 0.26);
+    padding: 4px 10px;
+    border-radius: 100px;
+  }
+  .tier .tname {
+    font-family: "Spectral", serif;
+    font-weight: 600;
+    font-size: 21px;
+    color: var(--ink);
+    margin-bottom: 6px;
+  }
+  .tier .tdesc {
+    font-size: 14px;
+    color: var(--ink-mute);
+    margin-bottom: 22px;
+    min-height: 40px;
+  }
+  .tier .price {
+    display: flex;
+    align-items: baseline;
+    gap: 4px;
+    margin-bottom: 24px;
+  }
+  .tier .price .amt {
+    font-family: "Spectral", serif;
+    font-weight: 600;
+    font-size: 48px;
+    line-height: 1;
+    letter-spacing: -0.02em;
+    color: var(--primary);
+  }
+  .tier .price .per { font-size: 14px; color: var(--ink-mute); }
+  .tier .features {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 28px;
+  }
+  .tier .features li {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    font-size: 14.5px;
+    color: var(--ink-soft);
+    line-height: 1.4;
+  }
+  .tier .features .tick {
+    flex: none;
+    width: 18px; height: 18px;
+    margin-top: 1px;
+    border-radius: 50%;
+    background: rgba(var(--accent-rgb), 0.15);
+    display: grid; place-items: center;
+  }
+  .tier .features .tick svg {
+    width: 10px; height: 10px;
+    stroke: var(--accent);
+    stroke-width: 2.6;
+    fill: none;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  .tier .btn { width: 100%; margin-top: auto; }
+
+  /* ---------- FOOTER ---------- */
+  footer.page {
+    border-top: 1px solid var(--hairline);
+    padding: 40px 0 56px;
+    margin-top: 40px;
+  }
+  .foot-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+  .foot-brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 14.5px;
+    color: var(--ink-soft);
+  }
+  .foot-brand .fb {
+    font-family: "Spectral", serif;
+    font-weight: 600;
+    font-size: 17px;
+    color: var(--primary);
+  }
+  .foot-sep { color: var(--ink-mute); opacity: 0.6; }
+  .foot-links { display: flex; gap: 30px; }
+  .foot-links a {
+    font-size: 14.5px;
+    color: var(--ink-mute);
+    transition: color 0.25s var(--ease);
+  }
+  .foot-links a:hover { color: var(--primary); }
+
+  /* ---------- RESPONSIVE ---------- */
+  @media (max-width: 900px) {
+    .intro h1 { font-size: 46px; }
+    .card-grid { grid-template-columns: 1fr; }
+    .pricing-grid { grid-template-columns: 1fr; max-width: 460px; }
+    .tier.featured { transform: translateY(0); }
+    .tier.featured:hover { transform: translateY(-5px); }
+    .section-label { flex-direction: column; gap: 8px; }
+    .section-label p { margin-left: 0; text-align: left; }
+  }
+
+  @media (max-width: 640px) {
+    .wrap { padding: 0 22px; }
+    .form-grid { grid-template-columns: 1fr; }
+    .demo-links, .demo-nav .nav-cta { display: none; }
+    .demo-burger { display: grid; }
+    .head-tag { display: none; }
+    .subscribe { flex-direction: column; }
+    .subscribe .btn { width: 100%; }
+    .specimen { padding: 24px 20px; }
+    .intro { padding: 48px 0 32px; }
+    .intro h1 { font-size: 38px; }
+    .intro p { font-size: 17px; }
+  }
+
+  @media (max-width: 380px) {
+    .intro h1 { font-size: 33px; }
+    .section-label h2 { font-size: 25px; }
+    .stat-card .snum { font-size: 44px; }
+  }
+</style>
+</head>
+<body>
+
+  <header class="page">
+    <div class="wrap">
+      <nav>
+        <a class="brand" href="#">
+          <span class="mark" aria-hidden="true">
+            <svg width="30" height="30" viewBox="0 0 30 30" fill="none">
+              <rect x="1" y="1" width="28" height="28" rx="8" fill="#1F3D2F"/>
+              <path d="M9 21V9L21 21V9" stroke="#EDE9DE" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+              <circle cx="21" cy="9" r="2.1" fill="#B98A3E"/>
+            </svg>
+          </span>
+          Simba-Taste
+        </a>
+        <div class="head-tools">
+          <span class="head-tag">Component Reference</span>
+          <button class="theme-toggle" id="themeToggle" type="button" aria-label="Toggle color theme">
+            <span id="themeLabel">Dark</span>
+          </button>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="wrap intro">
+      <span class="eyebrow"><span class="dot"></span> Design System</span>
+      <h1>Components, <span class="accent">composed.</span></h1>
+      <p>The building blocks of the Simba-Taste design language: buttons, forms, navigation, cards, badges, and pricing, all rendered in Spectral and Work Sans on the Oxblood palette.</p>
+    </section>
+
+    <!-- 1. BUTTONS -->
+    <section class="wrap section" id="buttons">
+      <div class="section-label">
+        <span class="idx">01</span>
+        <h2>Buttons</h2>
+        <p>Primary and ghost styles across sizes, with hover, active, and disabled states.</p>
+      </div>
+      <div class="specimen stack">
+        <div>
+          <div class="row-label">Primary · medium &amp; small</div>
+          <div class="cluster">
+            <button class="btn btn-primary">Start free <span class="arw" aria-hidden="true">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h9M8 4l4 4-4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span></button>
+            <button class="btn btn-primary btn-sm">Small action</button>
+            <button class="btn btn-primary" disabled>Disabled</button>
+          </div>
+        </div>
+        <div>
+          <div class="row-label">Ghost / secondary · medium &amp; small</div>
+          <div class="cluster">
+            <button class="btn btn-ghost">Book a demo</button>
+            <button class="btn btn-ghost btn-sm">Small ghost</button>
+            <button class="btn btn-ghost" disabled>Disabled</button>
+          </div>
+        </div>
+        <p class="state-hint">Hover to lift, press for the <code>:active</code> settle. Disabled buttons drop shadow and dim to 42%.</p>
+      </div>
+    </section>
+
+    <!-- 2. FORM CONTROLS -->
+    <section class="wrap section" id="forms">
+      <div class="section-label">
+        <span class="idx">02</span>
+        <h2>Form controls</h2>
+        <p>Labeled inputs with brass focus rings, plus an inline subscribe form.</p>
+      </div>
+      <div class="specimen stack">
+        <form class="form-grid" onsubmit="return false">
+          <div class="field">
+            <label for="fname">Full name</label>
+            <input class="input" id="fname" type="text" placeholder="Simba Delthorne" />
+          </div>
+          <div class="field">
+            <label for="fteam">Team size</label>
+            <select class="select" id="fteam">
+              <option>1–5 people</option>
+              <option>6–20 people</option>
+              <option>21–50 people</option>
+              <option>50+ people</option>
+            </select>
+          </div>
+          <div class="field full">
+            <label for="fnote">Notes</label>
+            <textarea class="textarea" id="fnote" placeholder="Tell us what your team is trying to solve…"></textarea>
+          </div>
+          <div class="field full">
+            <label class="check">
+              <input type="checkbox" checked />
+              <span class="box" aria-hidden="true"><svg viewBox="0 0 16 16"><path d="M3 8.5l3.2 3.2L13 4.8"/></svg></span>
+              <span class="ctext">Send me occasional product updates. No noise, unsubscribe anytime.</span>
+            </label>
+          </div>
+        </form>
+        <div>
+          <div class="row-label">Inline subscribe</div>
+          <form class="subscribe" onsubmit="return false">
+            <input type="email" placeholder="you@company.com" aria-label="Email address" />
+            <button class="btn btn-primary" type="submit">Subscribe</button>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. NAVIGATION -->
+    <section class="wrap section" id="nav">
+      <div class="section-label">
+        <span class="idx">03</span>
+        <h2>Navigation bar</h2>
+        <p>Wordmark, links, and CTA over a hairline. Collapses to a menu button under 640px.</p>
+      </div>
+      <div class="specimen">
+        <div class="nav-demo-frame">
+          <div class="demo-nav">
+            <a class="brand" href="#">
+              <span class="mark" aria-hidden="true">
+                <svg width="28" height="28" viewBox="0 0 30 30" fill="none">
+                  <rect x="1" y="1" width="28" height="28" rx="8" fill="#1F3D2F"/>
+                  <path d="M9 21V9L21 21V9" stroke="#EDE9DE" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+                  <circle cx="21" cy="9" r="2.1" fill="#B98A3E"/>
+                </svg>
+              </span>
+              Simba-Taste
+            </a>
+            <div class="demo-links">
+              <a href="#">Product</a>
+              <a href="#">Pricing</a>
+              <a href="#">Docs</a>
+              <a href="#">Company</a>
+            </div>
+            <button class="btn btn-primary nav-cta">Start free</button>
+            <button class="demo-burger" type="button" aria-label="Open menu"><span></span></button>
+          </div>
+          <div class="nav-demo-note">Resize below 640px and the links and CTA fold into the menu button.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. CARDS -->
+    <section class="wrap section" id="cards">
+      <div class="section-label">
+        <span class="idx">04</span>
+        <h2>Cards</h2>
+        <p>A content card and a stat card with Spectral numerals, medium radius, soft shadow.</p>
+      </div>
+      <div class="specimen">
+        <div class="card-grid">
+          <article class="content-card">
+            <div class="kicker">Product update</div>
+            <h3>Living docs that keep themselves current</h3>
+            <p>When a decision changes, every linked doc updates in place, so nobody works from a stale copy again.</p>
+            <div class="card-foot">
+              <span class="avatar">S</span>
+              <span class="meta"><b>Simba Delthorne</b>Shipped 2 days ago</span>
+            </div>
+          </article>
+          <article class="stat-card">
+            <span class="slabel">Time saved / week</span>
+            <span class="snum">6.4h</span>
+            <span class="strend"><span class="up">&uarr;</span> up 18% this quarter</span>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5. BADGES -->
+    <section class="wrap section" id="badges">
+      <div class="section-label">
+        <span class="idx">05</span>
+        <h2>Badges &amp; tags</h2>
+        <p>Pill labels in primary and accent tints, plus solid and outline variants.</p>
+      </div>
+      <div class="specimen">
+        <div class="cluster">
+          <span class="badge primary"><span class="pulse"></span> Live</span>
+          <span class="badge primary">In review</span>
+          <span class="badge accent">New</span>
+          <span class="badge accent">Beta</span>
+          <span class="badge solid">Featured</span>
+          <span class="badge outline">Archived</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6. PRICING -->
+    <section class="wrap section" id="pricing">
+      <div class="section-label">
+        <span class="idx">06</span>
+        <h2>Pricing table</h2>
+        <p>Three tiers with Team featured. Three columns collapse to one on mobile.</p>
+      </div>
+      <div class="specimen" style="background:transparent;border:none;box-shadow:none;padding:0;">
+        <div class="pricing-grid">
+          <div class="tier">
+            <div class="tname">Starter</div>
+            <div class="tdesc">For individuals and small side projects finding their footing.</div>
+            <div class="price"><span class="amt">$0</span><span class="per">/ month</span></div>
+            <ul class="features">
+              <li><span class="tick"><svg viewBox="0 0 16 16"><path d="M3 8.5l3.2 3.2L13 4.8"/></svg></span> Up to 3 members</li>
+              <li><span class="tick"><svg viewBox="0 0 16 16"><path d="M3 8.5l3.2 3.2L13 4.8"/></svg></span> 500 living docs</li>
+              <li><span class="tick"><svg viewBox="0 0 16 16"><path d="M3 8.5l3.2 3.2L13 4.8"/></svg></span> Community support</li>
+            </ul>
+            <button class="btn btn-ghost">Get started</button>
+          </div>
+          <div class="tier featured">
+            <span class="tier-flag">Most popular</span>
+            <div class="tname">Team</div>
+            <div class="tdesc">For growing teams that need one shared brain and real automation.</div>
+            <div class="price"><span class="amt">$24</span><span class="per">/ seat · mo</span></div>
+            <ul class="features">
+              <li><span class="tick"><svg viewBox="0 0 16 16"><path d="M3 8.5l3.2 3.2L13 4.8"/></svg></span> Unlimited members</li>
+              <li><span class="tick"><svg viewBox="0 0 16 16"><path d="M3 8.5l3.2 3.2L13 4.8"/></svg></span> Unlimited living docs</li>
+              <li><span class="tick"><svg viewBox="0 0 16 16"><path d="M3 8.5l3.2 3.2L13 4.8"/></svg></span> AI ask &amp; automations</li>
+              <li><span class="tick"><svg viewBox="0 0 16 16"><path d="M3 8.5l3.2 3.2L13 4.8"/></svg></span> Priority support</li>
+            </ul>
+            <button class="btn btn-primary">Start free trial <span class="arw" aria-hidden="true">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h9M8 4l4 4-4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span></button>
+          </div>
+          <div class="tier">
+            <div class="tname">Scale</div>
+            <div class="tdesc">For organizations that need governance, SSO, and dedicated support.</div>
+            <div class="price"><span class="amt">$48</span><span class="per">/ seat · mo</span></div>
+            <ul class="features">
+              <li><span class="tick"><svg viewBox="0 0 16 16"><path d="M3 8.5l3.2 3.2L13 4.8"/></svg></span> Everything in Team</li>
+              <li><span class="tick"><svg viewBox="0 0 16 16"><path d="M3 8.5l3.2 3.2L13 4.8"/></svg></span> SSO &amp; SCIM</li>
+              <li><span class="tick"><svg viewBox="0 0 16 16"><path d="M3 8.5l3.2 3.2L13 4.8"/></svg></span> Audit log &amp; roles</li>
+              <li><span class="tick"><svg viewBox="0 0 16 16"><path d="M3 8.5l3.2 3.2L13 4.8"/></svg></span> Dedicated manager</li>
+            </ul>
+            <button class="btn btn-ghost">Contact sales</button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="page">
+    <div class="wrap foot-inner">
+      <div class="foot-brand">
+        <span class="fb">Simba-Taste</span>
+        <span class="foot-sep">·</span>
+        <span>Component Reference · © 2026</span>
+      </div>
+      <div class="foot-links">
+        <a href="#buttons">Buttons</a>
+        <a href="#forms">Forms</a>
+        <a href="#cards">Cards</a>
+        <a href="#pricing">Pricing</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Theme toggle only flips the data-theme attribute — all color comes from tokens.
+    (function () {
+      var root = document.documentElement;
+      var btn = document.getElementById('themeToggle');
+      var label = document.getElementById('themeLabel');
+      function prefersDark() {
+        return window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+      }
+      function current() {
+        var t = root.getAttribute('data-theme');
+        if (t) return t;
+        return prefersDark() ? 'dark' : 'light';
+      }
+      function sync() {
+        label.textContent = current() === 'dark' ? 'Light' : 'Dark';
+      }
+      btn.addEventListener('click', function () {
+        root.setAttribute('data-theme', current() === 'dark' ? 'light' : 'dark');
+        sync();
+      });
+      sync();
+    })();
+  </script>
+
+</body>
+</html>

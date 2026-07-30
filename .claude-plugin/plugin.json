@@ -1,19 +1,20 @@
 {
-  "name": "taste-skill",
-  "description": "Frontend design taste skills including brutalist, minimalist, soft, redesign, stitch, and more",
+  "name": "simba-taste",
+  "description": "Simba-Taste — a personalized anti-slop frontend design skill pack (brutalist, minimalist, soft, redesign, stitch, and more). Forked from leonxlnx/taste-skill.",
   "version": "1.0.0",
   "author": {
-    "name": "leonxlnx",
+    "name": "ksimback",
     "email": ""
   },
-  "homepage": "https://github.com/leonxlnx/taste-skill",
-  "repository": "https://github.com/leonxlnx/taste-skill",
+  "homepage": "https://github.com/ksimback/Simba-Taste",
+  "repository": "https://github.com/ksimback/Simba-Taste",
   "license": "MIT",
   "keywords": [
     "skills",
     "frontend",
     "design",
     "taste",
+    "simba",
     "ui"
   ]
 }

@@ -1,18 +1,18 @@
 {
-  "name": "taste-skill",
-  "description": "Taste skill library for Claude Code — frontend design, image-to-code, and aesthetic skills",
+  "name": "simba-taste",
+  "description": "Simba-Taste — a personalized frontend design, image-to-code, and aesthetic skill library for Claude Code. Forked from leonxlnx/taste-skill.",
   "owner": {
-    "name": "leonxlnx",
+    "name": "ksimback",
     "email": ""
   },
   "plugins": [
     {
-      "name": "taste-skill",
-      "description": "Frontend design taste skills including brutalist, minimalist, soft, redesign, stitch, and more",
+      "name": "simba-taste",
+      "description": "Simba-Taste — a personalized anti-slop frontend design skill pack (brutalist, minimalist, soft, redesign, stitch, and more). Forked from leonxlnx/taste-skill.",
       "version": "1.0.0",
       "source": "./",
       "author": {
-        "name": "leonxlnx",
+        "name": "ksimback",
         "email": ""
       }
     }

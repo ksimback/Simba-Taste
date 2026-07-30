@@ -2,10 +2,14 @@
   <img src="assets/readme-banner.webp" alt="Taste Skill - Anti-slop Agent Skills for premium frontends" width="100%" />
 </p>
 
-# Taste Skill
+# Simba-Taste
 
 <p align="center">
-  <em>The Anti-Slop Frontend Framework for AI Agents</em>
+  <em>Kevin's personalized anti-slop frontend skill pack for AI agents 🦁</em>
+</p>
+
+<p align="center">
+  <sub>A personal fork of <a href="https://github.com/Leonxlnx/taste-skill">Leonxlnx/taste-skill</a>, tuned for Simba taste. Original work © leonxlnx (MIT).</sub>
 </p>
 
 <p align="center" style="margin-bottom: 8px;">
